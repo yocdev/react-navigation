@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { PureComponent } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Dimensions, Platform } from 'react-native';
 import { TabViewAnimated, TabViewPagerPan } from 'react-native-tab-view';
 import SceneView from '../SceneView';
 import withCachedChildNavigation from '../../withCachedChildNavigation';
@@ -191,6 +191,14 @@ class TabView extends PureComponent<void, Props, void> {
       screenProps: this.props.screenProps,
       style: styles.container,
     };
+
+    // Hackfix for nested TabNavigator issues on Android.
+    // Solution comes from https://github.com/Minishlink/react-navigation/commit/c326c9ba43e101d85b8e590ba9fba9ee0652d5c9
+    // See issue: https://github.com/react-community/react-navigation/issues/662
+    if (Platform.OS === 'android') {
+        const { width, height } = Dimensions.get('window');
+        props.initialLayout = { width, height };
+    }
 
     return <TabViewAnimated {...props} />;
   }
