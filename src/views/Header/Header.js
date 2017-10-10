@@ -91,6 +91,7 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
 
     const titleStyle = details.options.headerTitleStyle;
     const color = details.options.headerTintColor;
+    const allowFontScaling = details.options.headerTitleAllowFontScaling;
 
     // On iOS, width of left/right components depends on the calculated
     // size of the title.
@@ -109,6 +110,7 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
     return (
       <HeaderTitle
         onLayout={onLayoutIOS}
+        allowFontScaling={allowFontScaling == null ? true : allowFontScaling}
         style={[color ? { color } : null, titleStyle]}
       >
         {titleString}
